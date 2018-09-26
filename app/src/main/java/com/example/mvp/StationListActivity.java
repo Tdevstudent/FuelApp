@@ -39,7 +39,7 @@ public class StationListActivity extends ListActivity {
 
                 GasStation station= gasStations.get(position);
 
-                Snackbar.make(view, station.getAddress()+"\n"+station.getEuro95()+" API: "+station.getLastUpdated(), Snackbar.LENGTH_LONG)
+                Snackbar.make(view, station.getName()+", "+station.getAddress()+"\n"+station.getEuro95()+" Last updated "+station.getLastUpdated(), Snackbar.LENGTH_LONG)
                         .setAction("No action", null).show();
             }
         });
