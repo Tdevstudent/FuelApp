@@ -12,9 +12,12 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private ArrayList<GasStation> gasStations=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        gasStations.add(new GasStation("Shell","Zonnelaan 389", 1.629, 1.339, "September 26, 2018", new LatLng(53.235381, 6.539334)));
+        gasStations.add(new GasStation("BP Paddepoel","Pleiadenlaan 9742", 1.669, 1.379, "September 26, 2018", new LatLng(53.229204, 6.545308)));
+        gasStations.add(new GasStation("Tango Groningen Laan","LAAN 1940-1945 nr 300", 1.579, 1.269, "September 26, 2018", new LatLng(53.218189, 6.538995)));
+        gasStations.add(new GasStation("Gulf","Hoendiep 94", 1.719, 1.419, "September 26, 2018", new LatLng(53.212751, 6.539237)));
+        gasStations.add(new GasStation("BP","Paterswoldsweg 139", 1.709, 1.409, "September 26, 2018", new LatLng(53.203064, 6.558387)));
+        gasStations.add(new GasStation("Tamoil Express","Peizerweg 9727", 1.599, 1.329, "September 26, 2018", new LatLng(53.207897, 6.538240)));
+        gasStations.add(new GasStation("Tango Groningen Zuiderweg","Zuiderweg 409a", 1.579, 1.269, "September 26, 2018", new LatLng(53.200634, 6.512217)));
     }
 
 
@@ -42,17 +53,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         LatLng groningen = new LatLng(53.213846,6.569568);
 
-        LatLng station1 = new LatLng(53.212612,6.592821);
-        LatLng station2 = new LatLng(53.221658,6.582410);
-        LatLng station3 = new LatLng(53.221401,6.552261);
-
-        MarkerOptions marker1 = new MarkerOptions().position(station1).title("Virtual Gas Station 1").snippet("Euro95: €1.6, Diesel €1.4");
-        MarkerOptions marker2 = new MarkerOptions().position(station2).title("Virtual Gas Station 2").snippet("Euro95: €1.5, Diesel €1.3");
-        MarkerOptions marker3 = new MarkerOptions().position(station3).title("Virtual Gas Station 3").snippet("Euro95: €1.7, Diesel €1.2");
-
-        mMap.addMarker(marker1);
-        mMap.addMarker(marker2);
-        mMap.addMarker(marker3);
+        for (GasStation station: gasStations) {
+            mMap.addMarker(new MarkerOptions().position(station.getLocation()).title(station.getName()).snippet("Euro95: " + station.getEuro95() + ", Diesel: " + station.getDiesel()));
+        }
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(groningen, 13));
 
