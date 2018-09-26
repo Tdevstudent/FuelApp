@@ -25,4 +25,12 @@ public class GasStation {
     public String getEuro95() {
         return "€"+this.euro95;
     }
+
+    public String getDiesel() {
+        return "€"+this.diesel;
+    }
+
+    public String getName() {
+        return this.name;
+    }
 }

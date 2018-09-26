@@ -18,9 +18,9 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
     Context mContext;
 
     private static class ViewHolder {
-        TextView txtAddress;
+        TextView txtAddressName;
         TextView txtEuro95Price;
-        //TextView txtDieselPrice;
+        TextView txtDieselPrice;
         ImageView info;
     }
 
@@ -62,9 +62,9 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.activity_station_list, parent, false);
-            viewHolder.txtAddress = (TextView) convertView.findViewById(R.id.address);
+            viewHolder.txtAddressName = (TextView) convertView.findViewById(R.id.addressName);
             viewHolder.txtEuro95Price = (TextView) convertView.findViewById(R.id.euro95Price);
-            //viewHolder.txtVersion = (TextView) convertView.findViewById(R.id.version_number);
+            viewHolder.txtDieselPrice = (TextView) convertView.findViewById(R.id.dieselPrice);
             viewHolder.info = (ImageView) convertView.findViewById(R.id.item_info);
 
             result=convertView;
@@ -79,8 +79,9 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
         //result.startAnimation(animation);
         //lastPosition = position;
 
-        viewHolder.txtAddress.setText(station.getAddress());
+        viewHolder.txtAddressName.setText(station.getName()+", "+station.getAddress());
         viewHolder.txtEuro95Price.setText(station.getEuro95());
+        viewHolder.txtDieselPrice.setText(station.getDiesel());
         viewHolder.info.setOnClickListener(this);
         viewHolder.info.setTag(position);
         // Return the completed view to render on screen
