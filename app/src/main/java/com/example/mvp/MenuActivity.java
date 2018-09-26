@@ -25,7 +25,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void openList(View view) {
-        Intent intent = new Intent(this, ListActivity.class);
+        Intent intent = new Intent(this, StationListActivity.class);
         startActivity(intent);
     }
 }

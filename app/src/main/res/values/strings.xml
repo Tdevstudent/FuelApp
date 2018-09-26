@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">mvp</string>
     <string name="title_activity_maps">Map</string>
+    <string name="station_1_name">Shell</string>
+    <string name="station_1_address">Zonnelaan 389</string>
+    <string name="station_1_euro95">1.629</string>
+    <string name="station_1_diesel">1.339</string>
 </resources>
