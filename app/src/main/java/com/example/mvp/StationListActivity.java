@@ -1,7 +1,12 @@
 package com.example.mvp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,12 +16,15 @@ import android.widget.Toolbar;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class StationListActivity extends ListActivity {
 
     private ArrayList<GasStation> gasStations=new ArrayList<>();
     private ListView listView;
     private static CustomAdapter adapter;
+    private boolean sortedByEuro95=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,5 +53,42 @@ public class StationListActivity extends ListActivity {
                         .setAction("No action", null).show();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_list, menu);
+        return true;
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.prices:
+                if (!sortedByEuro95) {
+                    Collections.sort(gasStations, new Comparator<GasStation>() {
+                        @Override
+                        public int compare(GasStation o1, GasStation o2) {
+                            return o1.getEuro95().compareTo(o2.getEuro95());
+                        }
+                    });
+                    sortedByEuro95=true;
+                } else {
+                    Collections.sort(gasStations, new Comparator<GasStation>() {
+                        @Override
+                        public int compare(GasStation o1, GasStation o2) {
+                            return o2.getEuro95().compareTo(o1.getEuro95());
+                        }
+                    });
+                    sortedByEuro95=false;
+                }
+                adapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
