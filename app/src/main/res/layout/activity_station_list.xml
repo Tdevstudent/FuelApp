@@ -53,7 +53,7 @@
             android:layout_marginStart="210dp">
 
             <TextView
-                android:id="@+id/euro95"
+                android:id="@+id/textView1"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:text="Euro95  "
@@ -79,7 +79,7 @@
 
 
         <TextView
-                android:id="@+id/diesel"
+                android:id="@+id/textView2"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:text="Diesel  "

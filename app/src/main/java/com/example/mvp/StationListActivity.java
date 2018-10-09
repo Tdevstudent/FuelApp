@@ -47,10 +47,15 @@ public class StationListActivity extends ListActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                GasStation station= gasStations.get(position);
+                GasStation station = gasStations.get(position);
 
-                Snackbar.make(view, station.getName()+", "+station.getAddress()+"\n"+station.getEuro95()+" Last updated "+station.getLastUpdated(), Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
+                /*Snackbar.make(view, station.getName()+", "+station.getAddress()+"\n"+station.getEuro95()+" Last updated "+station.getLastUpdated(), Snackbar.LENGTH_LONG)
+                        .setAction("No action", null).show();*/
+
+
+                Intent intent = new Intent(StationListActivity.this, StationDetailsActivity.class);
+                intent.putExtra("station", station);
+                startActivity(intent);
             }
         });
     }
