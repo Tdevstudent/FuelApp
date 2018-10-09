@@ -3,9 +3,6 @@ package com.example.mvp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,15 +41,22 @@ public class StationListActivity extends ListActivity {
         gasStations.add(new GasStation("Tamoil Express","Peizerweg 9727", 1.599, 1.329, "September 26, 2018", new LatLng(53.207897, 6.538240)));
         gasStations.add(new GasStation("Tango Groningen Zuiderweg","Zuiderweg 409a", 1.579, 1.269, "September 26, 2018", new LatLng(53.200634, 6.512217)));
 
-        adapter=new CustomAdapter(gasStations, getApplicationContext());
+        adapter=new CustomAdapter(gasStations, getApplicationContext() );
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                GasStation station= gasStations.get(position);
-                startActivity(new Intent(StationListActivity.this, TankStationInformationActivity.class));
-            }
 
+                GasStation station = gasStations.get(position);
+
+                /*Snackbar.make(view, station.getName()+", "+station.getAddress()+"\n"+station.getEuro95()+" Last updated "+station.getLastUpdated(), Snackbar.LENGTH_LONG)
+                        .setAction("No action", null).show();*/
+
+
+                Intent intent = new Intent(StationListActivity.this, StationDetailsActivity.class);
+                intent.putExtra("station", station);
+                startActivity(intent);
+            }
         });
     }
 

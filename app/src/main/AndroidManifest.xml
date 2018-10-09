@@ -55,6 +55,7 @@
         </activity>
         <activity android:name=".ListActivity" />
         <activity android:name=".StationListActivity" />
+        <activity android:name=".StationDetailsActivity"></activity>
     </application>
 
 </manifest>

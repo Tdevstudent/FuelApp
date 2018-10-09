@@ -2,14 +2,16 @@ package com.example.mvp;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class GasStation {
+import java.io.Serializable;
+
+public class GasStation implements Serializable {
 
     private String name;
     private String address;
     private double euro95;
     private double diesel;
     private String lastUpdated;
-    private LatLng location;
+    private transient LatLng location;
 
     public GasStation(String name, String address, double euro95, double diesel, String lastUpdated, LatLng location) {
         this.name        = name;
