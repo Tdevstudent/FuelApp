@@ -41,7 +41,7 @@ public class StationListActivity extends ListActivity {
         gasStations.add(new GasStation("Tamoil Express","Peizerweg 9727", 1.599, 1.329, "September 26, 2018", new LatLng(53.207897, 6.538240)));
         gasStations.add(new GasStation("Tango Groningen Zuiderweg","Zuiderweg 409a", 1.579, 1.269, "September 26, 2018", new LatLng(53.200634, 6.512217)));
 
-        adapter=new CustomAdapter(gasStations, getApplicationContext());
+        adapter=new CustomAdapter(gasStations, getApplicationContext() );
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

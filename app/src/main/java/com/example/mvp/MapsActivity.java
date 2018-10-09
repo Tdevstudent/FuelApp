@@ -57,7 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addMarker(new MarkerOptions().position(station.getLocation()).title(station.getName()).snippet("Euro95: " + station.getEuro95() + ", Diesel: " + station.getDiesel()));
         }
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(groningen, 13));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(groningen, 12));
 
     }
 }

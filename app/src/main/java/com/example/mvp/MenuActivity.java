@@ -28,4 +28,9 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this, StationListActivity.class);
         startActivity(intent);
     }
+
+    public void openDetails(View view) {
+        Intent intent = new Intent(this, StationDetailsActivity.class);
+        startActivity(intent);
+    }
 }
