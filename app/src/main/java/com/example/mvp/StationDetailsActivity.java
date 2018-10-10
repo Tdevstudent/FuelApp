@@ -1,7 +1,10 @@
 package com.example.mvp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -56,5 +59,17 @@ public class StationDetailsActivity extends AppCompatActivity implements OnMapRe
         mMap.addMarker(new MarkerOptions().position(location).title(station.getName()));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 14));
+    }
+
+    public void showInMaps(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://www.google.com/maps/search/?api=1&query=" + station.getName() + "+" + station.getAddress()));
+        startActivity(intent);
+    }
+
+    public void navigate(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://www.google.com/maps/dir/?api=1&destination=" + station.getName() + "+" + station.getAddress()));
+        startActivity(intent);
     }
 }

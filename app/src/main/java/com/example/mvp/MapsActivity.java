@@ -56,6 +56,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(groningen, 12));
-
     }
 }
