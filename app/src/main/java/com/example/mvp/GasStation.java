@@ -2,22 +2,28 @@ package com.example.mvp;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class GasStation {
+import java.io.Serializable;
+
+public class GasStation implements Serializable {
 
     private String name;
     private String address;
     private double euro95;
     private double diesel;
     private String lastUpdated;
-    private LatLng location;
+    private double latitude;
+    private double longitude;
+    private transient LatLng location;
 
-    public GasStation(String name, String address, double euro95, double diesel, String lastUpdated, LatLng location) {
+    public GasStation(String name, String address, double euro95, double diesel, String lastUpdated, double latitude, double longitude) {
         this.name        = name;
         this.address     = address;
         this.euro95      = euro95;
         this.diesel      = diesel;
         this.lastUpdated = lastUpdated;
-        this.location    = location;
+        this.latitude    = latitude;
+        this.longitude   = longitude;
+        this.location    = new LatLng(latitude, longitude);
     }
 
     public String getLastUpdated() {
@@ -42,5 +48,13 @@ public class GasStation {
 
     public LatLng getLocation() {
         return location;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 }
