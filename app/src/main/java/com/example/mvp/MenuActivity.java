@@ -17,7 +17,7 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("chris", "create");
+        Log.d("human", "activity created");
 
         setContentView(R.layout.activity_menu);
         this.loc = new LocationTracking(this);
@@ -27,7 +27,7 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        Log.d("chris", "resume");
+        Log.d("human", "activity resumed");
 
         loc.access_location();
     }
