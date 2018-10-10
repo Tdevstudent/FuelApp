@@ -47,7 +47,7 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
         }
     }
 
-   // private int lastPosition = -1;
+    // private int lastPosition = -1;
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
