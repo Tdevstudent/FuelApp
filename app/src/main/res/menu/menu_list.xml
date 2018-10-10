@@ -5,4 +5,10 @@
         android:icon="@drawable/baseline_euro_symbol_white_24dp"
         android:title="€"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/myswitch"
+        android:title=""
+        app:showAsAction="always"
+        app:actionLayout="@layout/switch_layout"
+        />
 </menu>
