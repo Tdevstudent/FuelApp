@@ -32,6 +32,7 @@ public class StationListActivity extends ListActivity {
         setContentView(R.layout.activity_station_list_main);
 
         listView = findViewById(R.id.list);
+        
         gasStations.add(new GasStation("Shell","Zonnelaan 389", 1.629, 1.339, "September 26, 2018", new LatLng(53.235381, 6.539334)));
         gasStations.add(new GasStation("BP Paddepoel","Pleiadenlaan 9742", 1.669, 1.379, "September 26, 2018", new LatLng(53.229204, 6.545308)));
         gasStations.add(new GasStation("Tango Groningen Laan","LAAN 1940-1945 nr 300", 1.579, 1.269, "September 26, 2018", new LatLng(53.218189, 6.538995)));
@@ -50,7 +51,6 @@ public class StationListActivity extends ListActivity {
 
                 /*Snackbar.make(view, station.getName()+", "+station.getAddress()+"\n"+station.getEuro95()+" Last updated "+station.getLastUpdated(), Snackbar.LENGTH_LONG)
                         .setAction("No action", null).show();*/
-
 
                 Intent intent = new Intent(StationListActivity.this, StationDetailsActivity.class);
                 intent.putExtra("station", station);

@@ -5,4 +5,7 @@
     <string name="station_1_address">Zonnelaan 389</string>
     <string name="station_1_euro95">1.629</string>
     <string name="station_1_diesel">1.339</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
