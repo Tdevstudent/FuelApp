@@ -58,7 +58,7 @@ public class StationDetailsActivity extends AppCompatActivity implements OnMapRe
 
         mMap.addMarker(new MarkerOptions().position(location).title(station.getName()));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 14));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
     }
 
     public void showInMaps(View view) {
