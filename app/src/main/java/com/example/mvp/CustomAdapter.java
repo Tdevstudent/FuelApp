@@ -16,12 +16,13 @@ import java.util.ArrayList;
 public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnClickListener {
     private ArrayList<GasStation> gasStations;
     Context mContext;
+    private String fuelType="Euro95";
 
     private static class ViewHolder {
         TextView txtAddress;
         TextView txtName;
-        TextView txtEuro95Price;
-        TextView txtDieselPrice;
+        TextView txtFuelType;
+        TextView txtFuelPrice;
         ImageView info;
     }
 
@@ -29,6 +30,14 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
         super(context, R.layout.activity_station_list, gasStations);
         this.gasStations=gasStations;
         this.mContext=context;
+    }
+
+    public void switchFuelType() {
+        if (this.fuelType=="Euro95") {
+            this.fuelType="Diesel";
+        } else {
+            this.fuelType="Euro95";
+        }
     }
 
     @Override
@@ -65,8 +74,8 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
             convertView = inflater.inflate(R.layout.activity_station_list, parent, false);
             viewHolder.txtAddress = (TextView) convertView.findViewById(R.id.address);
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.name);
-            viewHolder.txtEuro95Price = (TextView) convertView.findViewById(R.id.euro95Price);
-            viewHolder.txtDieselPrice = (TextView) convertView.findViewById(R.id.dieselPrice);
+            viewHolder.txtFuelType = (TextView) convertView.findViewById(R.id.fuelType);
+            viewHolder.txtFuelPrice = (TextView) convertView.findViewById(R.id.fuelPrice);
             viewHolder.info = (ImageView) convertView.findViewById(R.id.item_info);
 
             result=convertView;
@@ -83,8 +92,12 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
 
         viewHolder.txtAddress.setText(station.getAddress());
         viewHolder.txtName.setText(station.getName());
-        viewHolder.txtEuro95Price.setText(station.getEuro95());
-        viewHolder.txtDieselPrice.setText(station.getDiesel());
+        viewHolder.txtFuelType.setText(this.fuelType);
+        if (this.fuelType=="Euro95") {
+            viewHolder.txtFuelPrice.setText(station.getEuro95());
+        } else if (this.fuelType=="Diesel") {
+            viewHolder.txtFuelPrice.setText(station.getDiesel());
+        }
         viewHolder.info.setOnClickListener(this);
         viewHolder.info.setTag(position);
         // Return the completed view to render on screen

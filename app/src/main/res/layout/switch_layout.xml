@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
     <Switch
-        android:id="@+id/switchAB"
+        android:id="@+id/fuelTypeSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -15,8 +15,8 @@
         android:layout_marginRight="8dp"
         android:fontFamily="sans-serif-condensed"
         android:gravity="left"
-        android:textOff="No"
-        android:showText="true"
-        android:textOn="Yes"
+        android:text="Fuel type"
+        android:switchTextAppearance="@style/SwitchTextAppearance"
+        android:saveEnabled="false"
         />
 </RelativeLayout>
