@@ -1,4 +1,4 @@
-package com.fuelapp.fuelapp;
+package com.example.mvp;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.example.mvp.GasStation;
 
 import java.util.ArrayList;
 

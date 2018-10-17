@@ -1,4 +1,4 @@
-package com.fuelapp.fuelapp;
+package com.example.mvp;
 
 import android.content.Intent;
 import android.os.Bundle;

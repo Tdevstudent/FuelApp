@@ -1,4 +1,4 @@
-package com.fuelapp.fuelapp;
+package com.example.mvp;
 
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;

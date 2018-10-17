@@ -1,4 +1,4 @@
-package com.fuelapp.fuelapp;
+package com.example.mvp;
 
 import android.os.Parcel;
 import android.os.Parcelable;
