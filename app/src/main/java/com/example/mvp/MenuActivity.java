@@ -41,4 +41,9 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this, StationListActivity.class);
         startActivity(intent);
     }
+
+    public void openTabs(View view) {
+        Intent intent = new Intent(this, TabbedActivity.class);
+        startActivity(intent);
+    }
 }

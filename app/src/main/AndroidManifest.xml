@@ -56,6 +56,9 @@
         <activity android:name=".ListActivity" />
         <activity android:name=".StationListActivity" />
         <activity android:name=".StationDetailsActivity" />
+        <activity
+            android:name=".TabbedActivity"
+            android:label="@string/title_activity_tabbed"></activity>
     </application>
 
 </manifest>

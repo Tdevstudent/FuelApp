@@ -54,12 +54,11 @@ public class StationListActivity extends ListActivity {
         gasStations.add(new GasStation("Tango Stadskanaal", "Poststraat 21", 1.619, 1.369, "October 3, 2018", 52.993096,6.944214));
 
         adapter = new CustomAdapter(gasStations, getApplicationContext() );
-
         listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 GasStation station = gasStations.get(position);
 
                 /*Snackbar.make(view, station.getName()+", "+station.getAddress()+"\n"+station.getEuro95()+" Last updated "+station.getLastUpdated(), Snackbar.LENGTH_LONG)
