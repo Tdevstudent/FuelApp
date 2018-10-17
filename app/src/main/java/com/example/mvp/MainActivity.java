@@ -213,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.sort_price:
+                sortedByName=false;
                 if (!sortedByPrice) {
                     Collections.sort(filteredGasStations, new Comparator<GasStation>() {
                         @Override
@@ -233,6 +234,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 listFragment.refresh("empty", filteredGasStations);
                 return true;
             case R.id.sort_name:
+                sortedByPrice=false;
                 if (!sortedByName) {
                     Collections.sort(filteredGasStations, new Comparator<GasStation>() {
                         @Override
