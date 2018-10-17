@@ -31,16 +31,16 @@ public class ListTab extends Fragment {
         listView.setAdapter(adapter);
 
         // TODO: make station details work
-        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GasStation station = gasStations.get(position);
 
-                Intent intent = new Intent(ListTab.this, StationDetailsActivity.class);
+                Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra("station", station);
                 startActivity(intent);
             }
-        });*/
+        });
 
         return view;
     }
