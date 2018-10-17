@@ -2,6 +2,7 @@ package com.example.mvp;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ public class MapTab extends Fragment implements OnMapReadyCallback {
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        gasStations = getArguments().getParcelableArrayList("gasStations");
+        gasStations = (ArrayList) getArguments().getParcelableArrayList("gasStations").clone();
         return view;
     }
 

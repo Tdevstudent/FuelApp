@@ -82,9 +82,9 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
         //viewHolder.txtAddress.setText(station.getAddress());
         viewHolder.txtName.setText(station.getName());
         viewHolder.txtFuelType.setText(this.fuelType);
-        if (this.fuelType=="Euro95") {
+        if (this.fuelType.equals("Euro95")) {
             viewHolder.txtFuelPrice.setText(station.getEuro95());
-        } else if (this.fuelType=="Diesel") {
+        } else if (this.fuelType.equals("Diesel")) {
             viewHolder.txtFuelPrice.setText(station.getDiesel());
         }
         //viewHolder.info.setOnClickListener(this);
