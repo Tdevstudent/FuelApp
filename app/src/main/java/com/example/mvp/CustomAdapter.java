@@ -32,12 +32,8 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
         this.mContext=context;
     }
 
-    public void switchFuelType() {
-        if (this.fuelType=="Euro95") {
-            this.fuelType="Diesel";
-        } else {
-            this.fuelType="Euro95";
-        }
+    public void setFuelType(String fuelType) {
+        this.fuelType=fuelType;
     }
 
     @Override
