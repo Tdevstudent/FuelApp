@@ -17,20 +17,13 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("human", "activity created");
-
         setContentView(R.layout.activity_menu);
-        this.loc = new LocationTracking(this);
-        loc.access_location();
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        Log.d("human", "activity resumed");
-
-        loc.access_location();
-    }
+        }
 
     public void openMaps(View view) {
         Intent intent = new Intent(this, MapsActivity.class);

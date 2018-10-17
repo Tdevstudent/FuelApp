@@ -7,6 +7,7 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -22,24 +23,23 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-public class LocationTracking {
+public class LocationTracking extends AppCompatActivity {
     private FusedLocationProviderClient mFusedLocationClient;
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
-    private MenuActivity menuActivity;
+    private AppCompatActivity parent_activity;
 
-    public LocationTracking(MenuActivity menuActivity) {
-        this.menuActivity = menuActivity;
+    public LocationTracking(AppCompatActivity parent_activity) {
+        this.parent_activity = parent_activity;
     }
 
     public void access_location() {
         checkPermission();
 
         GoogleApiAvailability gaa = GoogleApiAvailability.getInstance();
-        int errorCode = gaa.isGooglePlayServicesAvailable(menuActivity);
+        int errorCode = gaa.isGooglePlayServicesAvailable(parent_activity);
 
         if (errorCode == ConnectionResult.SUCCESS) {
             Log.d("human", "connected");
-            get_last_known_location();
         }else {
             Log.d("human", "couldn't connect");
         }
@@ -52,10 +52,10 @@ public class LocationTracking {
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                 .addLocationRequest(mLocationRequest);
 
-        SettingsClient client = LocationServices.getSettingsClient(menuActivity);
+        SettingsClient client = LocationServices.getSettingsClient(parent_activity);
         Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
 
-        task.addOnSuccessListener(menuActivity, new OnSuccessListener<LocationSettingsResponse>() {
+        task.addOnSuccessListener(parent_activity, new OnSuccessListener<LocationSettingsResponse>() {
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                 // All location settings are satisfied. The client can initialize
@@ -66,7 +66,7 @@ public class LocationTracking {
             }
         });
 
-        task.addOnFailureListener(menuActivity, new OnFailureListener() {
+        task.addOnFailureListener(parent_activity, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 if (e instanceof ResolvableApiException) {
@@ -77,7 +77,7 @@ public class LocationTracking {
                         // Show the dialog by calling startResolutionForResult(),
                         // and check the result in onActivityResult().
                         ResolvableApiException resolvable = (ResolvableApiException) e;
-                        resolvable.startResolutionForResult(menuActivity,
+                        resolvable.startResolutionForResult(parent_activity,
                                 REQUEST_CHECK_SETTINGS);
                     } catch (IntentSender.SendIntentException sendEx) {
                         // Ignore the error.
@@ -88,20 +88,20 @@ public class LocationTracking {
     }
 
     public void checkPermission(){
-        if (ContextCompat.checkSelfPermission(menuActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(menuActivity,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(parent_activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(parent_activity,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 ){//Can add more as per requirement
 
-            ActivityCompat.requestPermissions(menuActivity,
+            ActivityCompat.requestPermissions(parent_activity,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
                     123);
         }
     }
 
     public void get_last_known_location() {
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(menuActivity);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(parent_activity);
         mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(menuActivity, new OnSuccessListener<Location>() {
+                .addOnSuccessListener(parent_activity, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
@@ -113,7 +113,7 @@ public class LocationTracking {
                 });
 
         mFusedLocationClient.getLastLocation()
-                .addOnFailureListener(menuActivity, new OnFailureListener() {
+                .addOnFailureListener(parent_activity, new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.d("human", "error = " + e);

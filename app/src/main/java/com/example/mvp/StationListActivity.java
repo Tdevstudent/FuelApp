@@ -1,6 +1,7 @@
 package com.example.mvp;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.SwitchCompat;
@@ -28,11 +29,13 @@ public class StationListActivity extends ListActivity {
     private ListView listView;
     private static CustomAdapter adapter;
     private boolean sortedByEuro95=false;
+    private LocationTracking loc_tracking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station_list_main);
+        Log.d("human", "list activity created");
 
         listView = findViewById(R.id.list);
 
@@ -70,6 +73,9 @@ public class StationListActivity extends ListActivity {
                 startActivity(intent);
             }
         });
+
+        this.loc_tracking = new LocationTracking(this);
+        loc_tracking.access_location();
     }
 
     @Override
