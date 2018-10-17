@@ -29,6 +29,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private DrawerLayout mDrawerLayout;
     private ListTab listFragment;
     private MapTab menuFragment;
+    private boolean sortedByPrice=false;
+    private boolean sortedByName=false;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -207,6 +211,46 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            case R.id.sort_price:
+                if (!sortedByPrice) {
+                    Collections.sort(filteredGasStations, new Comparator<GasStation>() {
+                        @Override
+                        public int compare(GasStation o1, GasStation o2) {
+                            return o1.getEuro95().compareTo(o2.getEuro95());
+                        }
+                    });
+                    sortedByPrice=true;
+                } else {
+                    Collections.sort(filteredGasStations, new Comparator<GasStation>() {
+                        @Override
+                        public int compare(GasStation o1, GasStation o2) {
+                            return o2.getEuro95().compareTo(o1.getEuro95());
+                        }
+                    });
+                    sortedByPrice=false;
+                }
+                listFragment.refresh("empty", filteredGasStations);
+                return true;
+            case R.id.sort_name:
+                if (!sortedByName) {
+                    Collections.sort(filteredGasStations, new Comparator<GasStation>() {
+                        @Override
+                        public int compare(GasStation o1, GasStation o2) {
+                            return o1.getName().compareTo(o2.getName());
+                        }
+                    });
+                    sortedByName=true;
+                } else {
+                    Collections.sort(filteredGasStations, new Comparator<GasStation>() {
+                        @Override
+                        public int compare(GasStation o1, GasStation o2) {
+                            return o2.getName().compareTo(o1.getName());
+                        }
+                    });
+                    sortedByName=false;
+                }
+                listFragment.refresh("empty", filteredGasStations);
                 return true;
         }
         return super.onOptionsItemSelected(item);
