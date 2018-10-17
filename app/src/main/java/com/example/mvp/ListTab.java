@@ -14,6 +14,8 @@ import java.util.ArrayList;
 public class ListTab extends Fragment {
 
     private ArrayList<GasStation> gasStations = new ArrayList<>();
+    private ArrayList<GasStation> filteredGasStations=new ArrayList<>();
+    private ArrayList<String> hiddenStations=new ArrayList<String>();
     private ListView listView;
     private static CustomAdapter adapter;
     private boolean sortedByEuro95=false;
@@ -23,10 +25,10 @@ public class ListTab extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_main, container, false);
         gasStations = getArguments().getParcelableArrayList("gasStations");
-
+        filteredGasStations = (ArrayList) gasStations.clone();
         listView = view.findViewById(R.id.list);
 
-        adapter = new CustomAdapter(gasStations, getActivity().getApplicationContext());
+        adapter = new CustomAdapter(filteredGasStations, getActivity().getApplicationContext());
         listView.setAdapter(adapter);
 
         // TODO: make station details work

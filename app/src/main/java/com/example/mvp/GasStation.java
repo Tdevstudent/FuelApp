@@ -25,6 +25,7 @@ public class GasStation implements Parcelable {
     private double latitude;
     private double longitude;
     private LatLng location;
+    private String chain;
 
     public GasStation(String name, String address, double euro95, double diesel, String lastUpdated, double latitude, double longitude) {
         this.name        = name;
@@ -35,6 +36,7 @@ public class GasStation implements Parcelable {
         this.latitude    = latitude;
         this.longitude   = longitude;
         this.location    = new LatLng(latitude, longitude);
+        this.chain       = chain;
     }
 
     public String getLastUpdated() {
@@ -69,6 +71,10 @@ public class GasStation implements Parcelable {
         return location;
     }
 
+    public String getChain() {
+        return chain;
+    }
+
     // Parcelling part
     public GasStation(Parcel in) {
         this.name        = in.readString();
@@ -78,6 +84,7 @@ public class GasStation implements Parcelable {
         this.lastUpdated = in.readString();
         this.latitude    = in.readDouble();
         this.longitude   = in.readDouble();
+        this.chain       = in.readString();
     }
 
     @Override

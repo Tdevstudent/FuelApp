@@ -33,12 +33,8 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
         this.mContext=context;
     }
 
-    public void switchFuelType() {
-        if (this.fuelType=="Euro95") {
-            this.fuelType="Diesel";
-        } else {
-            this.fuelType="Euro95";
-        }
+    public void setFuelType(String fuelType) {
+        this.fuelType=fuelType;
     }
 
     @Override
@@ -47,14 +43,6 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         GasStation station=(GasStation)object;
-
-        /*switch (v.getId())
-        {
-            case R.id.item_info:
-                Snackbar.make(v, "Last updated on: " +station.getLastUpdated(), Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
-                break;
-        }*/
     }
 
     // private int lastPosition = -1;
