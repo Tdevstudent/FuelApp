@@ -33,9 +33,7 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
         this.gasStations=gasStationsI;
         this.mContext=context;
     }
-
-
-
+    
     public void setFuelType(String fuelType) {
         this.fuelType=fuelType;
     }
