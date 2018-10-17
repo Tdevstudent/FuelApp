@@ -14,8 +14,9 @@ public class GasStation implements Serializable {
     private double latitude;
     private double longitude;
     private transient LatLng location;
+    private String chain;
 
-    public GasStation(String name, String address, double euro95, double diesel, String lastUpdated, double latitude, double longitude) {
+    public GasStation(String name, String address, double euro95, double diesel, String lastUpdated, double latitude, double longitude, String chain) {
         this.name        = name;
         this.address     = address;
         this.euro95      = euro95;
@@ -24,6 +25,7 @@ public class GasStation implements Serializable {
         this.latitude    = latitude;
         this.longitude   = longitude;
         this.location    = new LatLng(latitude, longitude);
+        this.chain       = chain;
     }
 
     public String getLastUpdated() {
@@ -56,5 +58,9 @@ public class GasStation implements Serializable {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public String getChain() {
+        return chain;
     }
 }

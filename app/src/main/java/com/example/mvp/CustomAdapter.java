@@ -2,6 +2,7 @@ package com.example.mvp;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnClickListener {
-    private ArrayList<GasStation> gasStations;
-    Context mContext;
+    private ArrayList<GasStation> gasStations=new ArrayList<GasStation>();
+    private Context mContext;
     private String fuelType="Euro95";
 
     private static class ViewHolder {
@@ -26,11 +27,14 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
         ImageView info;
     }
 
-    public CustomAdapter(ArrayList<GasStation> gasStations, Context context) {
-        super(context, R.layout.activity_station_list, gasStations);
-        this.gasStations=gasStations;
+    public CustomAdapter(ArrayList<GasStation> gasStationsI, Context context) {
+        super(context, R.layout.activity_station_list, gasStationsI);
+        int count=0;
+        this.gasStations=(ArrayList)gasStationsI.clone();
         this.mContext=context;
     }
+
+
 
     public void setFuelType(String fuelType) {
         this.fuelType=fuelType;
@@ -57,6 +61,7 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
+        int count=0;
         GasStation station = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
@@ -89,9 +94,9 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
         //viewHolder.txtAddress.setText(station.getAddress());
         viewHolder.txtName.setText(station.getName());
         viewHolder.txtFuelType.setText(this.fuelType);
-        if (this.fuelType=="Euro95") {
+        if (this.fuelType.equals("Euro95")) {
             viewHolder.txtFuelPrice.setText(station.getEuro95());
-        } else if (this.fuelType=="Diesel") {
+        } else if (this.fuelType.equals("Diesel")) {
             viewHolder.txtFuelPrice.setText(station.getDiesel());
         }
         //viewHolder.info.setOnClickListener(this);
