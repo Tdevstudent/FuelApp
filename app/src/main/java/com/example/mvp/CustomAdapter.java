@@ -30,7 +30,7 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
     public CustomAdapter(ArrayList<GasStation> gasStationsI, Context context) {
         super(context, R.layout.activity_station_list, gasStationsI);
         int count=0;
-        this.gasStations=(ArrayList)gasStationsI.clone();
+        this.gasStations=gasStationsI;
         this.mContext=context;
     }
 
