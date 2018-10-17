@@ -19,6 +19,7 @@ public class MapTab extends Fragment implements OnMapReadyCallback {
 
     private ArrayList<GasStation> gasStations = new ArrayList<>();
     private GoogleMap mMap;
+    private static final String TAB_FRAGMENT_TAG = "MAP";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

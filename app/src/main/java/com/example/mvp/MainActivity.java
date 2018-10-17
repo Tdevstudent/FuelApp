@@ -23,12 +23,14 @@ import android.view.ViewGroup;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -40,7 +42,11 @@ public class MainActivity extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ArrayList<GasStation> gasStations = new ArrayList<>();
+    private ArrayList<GasStation> filteredGasStations=new ArrayList<>();
+    private ArrayList<String> hiddenStations=new ArrayList<String>();
     private DrawerLayout mDrawerLayout;
+    private ListTab listFragment;
+    private MapTab menuFragment;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -52,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        listFragment = (ListTab) getSupportFragmentManager().findFragmentByTag("LIST");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -80,27 +88,110 @@ public class MainActivity extends AppCompatActivity {
             }
         }); */
 
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
         createGasStations();
 
+        setNavigationDrawer(navigationView);
+
+        setCheckBoxes(navigationView);
+
+        makeGasStationsList(gasStations);
+    }
+
+    public void setCheckBoxes(NavigationView navigationView) {
+        CheckBox checkBox1 = (CheckBox) navigationView.getMenu().findItem(R.id.navigation_drawer_checkbox1).getActionView();
+        CheckBox checkBox2 = (CheckBox) navigationView.getMenu().findItem(R.id.navigation_drawer_checkbox2).getActionView();
+        CheckBox checkBox3 = (CheckBox) navigationView.getMenu().findItem(R.id.navigation_drawer_checkbox3).getActionView();
+        CheckBox checkBox4 = (CheckBox) navigationView.getMenu().findItem(R.id.navigation_drawer_checkbox4).getActionView();
+        CheckBox checkBox5 = (CheckBox) navigationView.getMenu().findItem(R.id.navigation_drawer_checkbox5).getActionView();
+
+        setCheckBox(checkBox1, "BP");
+        setCheckBox(checkBox2,"Shell");
+        setCheckBox(checkBox3,"Tamoil");
+        setCheckBox(checkBox4,"Tango");
+        setCheckBox(checkBox5,"Gulf");
+    }
+
+    public void setCheckBox(CheckBox cb, String text) {
+        cb.setText(text);
+        cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                CheckBox cb=(CheckBox) buttonView;
+                if (!isChecked) {
+                    addHiddenStation((String)cb.getText());
+                    //adapter.notifyDataSetChanged();
+                } else {
+                    removeHiddenStation((String)cb.getText());
+                }
+                makeGasStationsList(gasStations);
+                listFragment.refresh("empty", filteredGasStations);
+            }
+        });
+    }
+
+    public void makeGasStationsList(ArrayList<GasStation> gasStationsI) {
+        int count=0;
+        this.filteredGasStations.clear();
+        for (int i=0; i<gasStationsI.size(); i++) {
+            for (int j=0; j<hiddenStations.size(); j++) {
+                if (!gasStationsI.get(i).getChain().equals(hiddenStations.get(j))) {
+                    count=count+1;
+                }
+            }
+            if (count==hiddenStations.size()) {
+                this.filteredGasStations.add(gasStationsI.get(i));
+            }
+            count=0;
+        }
+    }
+
+    public void addHiddenStation(String station) {
+        hiddenStations.add(station);
+    }
+
+    public void removeHiddenStation(String station) {
+        for (int i=0; i<hiddenStations.size(); i++) {
+            if (station.equals(hiddenStations.get(i))) {
+                hiddenStations.remove(i);
+            }
+        }
+    }
+
+    public void setNavigationDrawer(NavigationView navigationView) {
+        // Navigation drawer
+        Spinner spinner = (Spinner) navigationView.getMenu().findItem(R.id.navigation_drawer_item1).getActionView();
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.fuel_type_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
     }
 
     public void createGasStations() {
-        gasStations.add(new GasStation("Shell Zonnelaan", "Zonnelaan 389", 1.629, 1.339, "September 26, 2018", 53.235381, 6.539334));
-        gasStations.add(new GasStation("BP Paddepoel", "Pleiadenlaan 9742", 1.669, 1.379, "September 26, 2018", 53.229204, 6.545308));
-        gasStations.add(new GasStation("Gulf Hoendiep", "Hoendiep 94", 1.719, 1.419, "September 26, 2018", 53.212751, 6.539237));
-        gasStations.add(new GasStation("BP Paterswoldseweg", "Paterswoldseweg 139", 1.709, 1.409, "September 26, 2018", 53.203064, 6.558387));
-        gasStations.add(new GasStation("Tamoil Express Peizerweg", "Peizerweg 9727", 1.599, 1.329, "September 26, 2018", 53.207897, 6.538240));
-        gasStations.add(new GasStation("Tango Groningen Zuiderweg", "Zuiderweg 409a", 1.579, 1.269, "September 26, 2018", 53.200634, 6.512217));
-        gasStations.add(new GasStation("Tango Groningen Laan", "LAAN 1940-1945 nr 300", 1.579, 1.269, "September 26, 2018", 53.218189, 6.538995));
-        gasStations.add(new GasStation("Tango Odenseweg", "Odenseweg 11", 1.619, 1.339, "October 3, 2018", 53.223004, 6.610190));
-        gasStations.add(new GasStation("Tango Delfzijl", "Sikkel 32", 1.639, 1.369, "October 3, 2018", 53.321366, 6.882926));
-        //gasStations.add(new GasStation("Tango Hoogezand Hoofdstraat", "Hoofdstraat 47A", 1.649, 1.399, "October 3, 2018", 53.163907,6.758118));
-        //gasStations.add(new GasStation("Tango Hoogezand Kuypersingel", "Abraham Kuypersingel 25", 1.649, 1.399, "October 3, 2018", 53.151962,6.756357));
-        gasStations.add(new GasStation("Tango Veendam Lloydsweg", "Lloydsweg 28", 1.639, 1.379, "October 3, 2018", 53.105203, 6.889030));
-        //gasStations.add(new GasStation("Tango Veendam Sorghvlietlaan", "Sorghvlietlaan 11", 1.639, 1.379, "October 3, 2018", 53.095820,6.857981));
-        gasStations.add(new GasStation("Tango Oude Pekela", "Raadhuislaan 107", 1.629, 1.359, "October 3, 2018", 53.107035, 7.002643));
-        gasStations.add(new GasStation("Tango Winschoten", "Papierbaan 3D", 1.599, 1.309, "October 3, 2018", 53.149205, 7.051700));
-        gasStations.add(new GasStation("Tango Stadskanaal", "Poststraat 21", 1.619, 1.369, "October 3, 2018", 52.993096, 6.944214));
+        gasStations.add(new GasStation("Shell Zonnelaan", "Zonnelaan 389", 1.629, 1.339, "September 26, 2018", 53.235381, 6.539334, "Shell"));
+        gasStations.add(new GasStation("BP Paddepoel", "Pleiadenlaan 9742", 1.669, 1.379, "September 26, 2018", 53.229204, 6.545308, "BP"));
+        gasStations.add(new GasStation("Gulf Hoendiep", "Hoendiep 94", 1.719, 1.419, "September 26, 2018", 53.212751, 6.539237, "Gulf"));
+
+        gasStations.add(new GasStation("BP Paterswoldseweg", "Paterswoldseweg 139", 1.709, 1.409, "September 26, 2018", 53.203064, 6.558387, "BP"));
+
+        gasStations.add(new GasStation("Tamoil Express Peizerweg", "Peizerweg 9727", 1.599, 1.329, "September 26, 2018", 53.207897, 6.538240, "Tamoil"));
+
+        gasStations.add(new GasStation("Tango Groningen Zuiderweg", "Zuiderweg 409a", 1.579, 1.269, "September 26, 2018", 53.200634, 6.512217, "Tango"));
+        gasStations.add(new GasStation("Tango Groningen Laan", "LAAN 1940-1945 nr 300", 1.579, 1.269, "September 26, 2018", 53.218189, 6.538995, "Tango"));
+        gasStations.add(new GasStation("Tango Odenseweg", "Odenseweg 11", 1.619, 1.339, "October 3, 2018", 53.223004, 6.610190, "Tango"));
+        gasStations.add(new GasStation("Tango Delfzijl", "Sikkel 32", 1.639, 1.369, "October 3, 2018", 53.321366, 6.882926, "Tango"));
+        //gasStations.add(new GasStation("Tango Hoogezand Hoofdstraat", "Hoofdstraat 47A", 1.649, 1.399, "October 3, 2018", 53.163907,6.758118, "Tango"));
+        //gasStations.add(new GasStation("Tango Hoogezand Kuypersingel", "Abraham Kuypersingel 25", 1.649, 1.399, "October 3, 2018", 53.151962,6.756357, "Tango"));
+        gasStations.add(new GasStation("Tango Veendam Lloydsweg", "Lloydsweg 28", 1.639, 1.379, "October 3, 2018", 53.105203, 6.889030, "Tango"));
+        //gasStations.add(new GasStation("Tango Veendam Sorghvlietlaan", "Sorghvlietlaan 11", 1.639, 1.379, "October 3, 2018", 53.095820,6.857981, "Tango"));
+        gasStations.add(new GasStation("Tango Oude Pekela", "Raadhuislaan 107", 1.629, 1.359, "October 3, 2018", 53.107035, 7.002643, "Tango"));
+        gasStations.add(new GasStation("Tango Winschoten", "Papierbaan 3D", 1.599, 1.309, "October 3, 2018", 53.149205, 7.051700, "Tango"));
+        gasStations.add(new GasStation("Tango Stadskanaal", "Poststraat 21", 1.619, 1.369, "October 3, 2018", 52.993096, 6.944214, "Tango"));
     }
 
 
@@ -137,9 +228,9 @@ public class MainActivity extends AppCompatActivity {
             bundle.putParcelableArrayList("gasStations", gasStations);
             switch (position) {
                 case 0:
-                    ListTab listTab = new ListTab();
-                    listTab.setArguments(bundle);
-                    return listTab;
+                    listFragment = new ListTab();
+                    listFragment.setArguments(bundle);
+                    return listFragment;
                 case 1:
                     MapTab mapTab = new MapTab();
                     mapTab.setArguments(bundle);
@@ -165,6 +256,20 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
+        //adapter.setFuelType((String)parent.getItemAtPosition(pos));
+        //adapter.notifyDataSetChanged();
+        listFragment.refresh((String)parent.getItemAtPosition(pos), filteredGasStations);
+
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
     }
 
 }

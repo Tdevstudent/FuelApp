@@ -27,7 +27,7 @@ public class GasStation implements Parcelable {
     private LatLng location;
     private String chain;
 
-    public GasStation(String name, String address, double euro95, double diesel, String lastUpdated, double latitude, double longitude) {
+    public GasStation(String name, String address, double euro95, double diesel, String lastUpdated, double latitude, double longitude, String chain) {
         this.name        = name;
         this.address     = address;
         this.euro95      = euro95;
