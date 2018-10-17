@@ -1,4 +1,4 @@
-package com.example.mvp;
+package com.fuelapp.fuelapp;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
@@ -27,7 +27,7 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
     }
 
     public CustomAdapter(ArrayList<GasStation> gasStations, Context context) {
-        super(context, R.layout.activity_station_list, gasStations);
+        super(context, R.layout.list_tab, gasStations);
         this.gasStations=gasStations;
         this.mContext=context;
     }
@@ -71,7 +71,7 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.activity_station_list, parent, false);
+            convertView = inflater.inflate(R.layout.list_tab, parent, false);
             //viewHolder.txtAddress = (TextView) convertView.findViewById(R.id.address);
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.name);
             viewHolder.txtFuelType = (TextView) convertView.findViewById(R.id.fuelType);

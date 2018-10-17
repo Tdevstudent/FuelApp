@@ -1,4 +1,4 @@
-package com.example.mvp;
+package com.fuelapp.fuelapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.mvp", appContext.getPackageName());
+        assertEquals("com.fuelapp.fuelapp", appContext.getPackageName());
     }
 }

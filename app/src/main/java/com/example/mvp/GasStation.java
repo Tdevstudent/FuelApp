@@ -1,10 +1,21 @@
-package com.example.mvp;
+package com.fuelapp.fuelapp;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.io.Serializable;
+public class GasStation implements Parcelable {
 
-public class GasStation implements Serializable {
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public GasStation createFromParcel(Parcel in) {
+            return new GasStation(in);
+        }
+
+        public GasStation[] newArray(int size) {
+            return new GasStation[size];
+        }
+    };
 
     private String name;
     private String address;
@@ -13,7 +24,7 @@ public class GasStation implements Serializable {
     private String lastUpdated;
     private double latitude;
     private double longitude;
-    private transient LatLng location;
+    private LatLng location;
 
     public GasStation(String name, String address, double euro95, double diesel, String lastUpdated, double latitude, double longitude) {
         this.name        = name;
@@ -46,15 +57,42 @@ public class GasStation implements Serializable {
         return this.name;
     }
 
-    public LatLng getLocation() {
-        return location;
-    }
-
     public double getLatitude() {
         return latitude;
     }
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public LatLng getLocation() {
+        return location;
+    }
+
+    // Parcelling part
+    public GasStation(Parcel in) {
+        this.name        = in.readString();
+        this.address     = in.readString();
+        this.euro95      = in.readDouble();
+        this.diesel      = in.readDouble();
+        this.lastUpdated = in.readString();
+        this.latitude    = in.readDouble();
+        this.longitude   = in.readDouble();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.address);
+        dest.writeDouble(this.euro95);
+        dest.writeDouble(this.diesel);
+        dest.writeString(this.lastUpdated);
+        dest.writeDouble(this.latitude);
+        dest.writeDouble(this.longitude);
     }
 }
