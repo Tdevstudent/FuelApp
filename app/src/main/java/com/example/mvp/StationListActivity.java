@@ -75,7 +75,7 @@ public class StationListActivity extends ListActivity {
         });
 
         this.loc_tracking = new LocationTracking(this);
-        loc_tracking.access_location();
+        loc_tracking.get_location();
     }
 
     @Override

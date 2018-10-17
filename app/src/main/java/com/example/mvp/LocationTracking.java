@@ -27,12 +27,22 @@ public class LocationTracking extends AppCompatActivity {
     private FusedLocationProviderClient mFusedLocationClient;
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
     private AppCompatActivity parent_activity;
+    private Location last_location;
 
     public LocationTracking(AppCompatActivity parent_activity) {
         this.parent_activity = parent_activity;
     }
 
-    public void access_location() {
+    private void set_lcoation(Location last_loc) {
+        this.last_location = last_loc;
+    }
+
+    public Location get_location() {
+        access_location();
+        return this.last_location;
+    }
+
+    private void access_location() {
         checkPermission();
 
         GoogleApiAvailability gaa = GoogleApiAvailability.getInstance();
@@ -87,7 +97,7 @@ public class LocationTracking extends AppCompatActivity {
         });
     }
 
-    public void checkPermission(){
+    private void checkPermission(){
         if (ContextCompat.checkSelfPermission(parent_activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(parent_activity,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 ){//Can add more as per requirement
@@ -98,7 +108,7 @@ public class LocationTracking extends AppCompatActivity {
         }
     }
 
-    public void get_last_known_location() {
+    private void get_last_known_location() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(parent_activity);
         mFusedLocationClient.getLastLocation()
                 .addOnSuccessListener(parent_activity, new OnSuccessListener<Location>() {
@@ -108,6 +118,7 @@ public class LocationTracking extends AppCompatActivity {
                         if (location != null) {
                             // Logic to handle location object
                             Log.d("human", "Location = " + location.toString());
+                            set_lcoation(location);
                         }
                     }
                 });
