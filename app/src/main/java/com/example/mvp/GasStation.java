@@ -1,5 +1,7 @@
 package com.example.mvp;
 
+import android.location.Location;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
@@ -62,5 +64,12 @@ public class GasStation implements Serializable {
 
     public String getChain() {
         return chain;
+    }
+
+    public float getDistance(Location loc) {
+        Location here = new Location("");
+        here.setLatitude(latitude);
+        here.setLongitude(longitude);
+        return loc.distanceTo(here) / 1000;
     }
 }
