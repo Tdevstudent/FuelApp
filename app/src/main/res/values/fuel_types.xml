@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="fuel_type_array">
-        <item>Euro95</item>
-        <item>Diesel</item>
+        <item>Euro95 (E5)</item>
+        <item>Diesel (B7)</item>
     </string-array>
 </resources>
