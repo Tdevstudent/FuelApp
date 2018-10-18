@@ -4,5 +4,6 @@
     <string name="tab_text_2">Gas Station Map</string>
     <string name="price_name">Price</string>
     <string name="name_name">Name</string>
+    <string name="last_updated_name">Last updated</string>
     <string name="section_format">Hello World from section: %1$d</string>
 </resources>
