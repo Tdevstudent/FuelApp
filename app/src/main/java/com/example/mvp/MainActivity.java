@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private MapTab menuFragment;
     private boolean sortedByPrice=false;
     private boolean sortedByName=false;
+    private boolean sortedByLastUpdated=false;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -211,6 +212,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 return true;
             case R.id.sort_price:
                 sortedByName=false;
+                sortedByLastUpdated=false;
                 if (!sortedByPrice) {
                     Collections.sort(filteredGasStations, new Comparator<GasStation>() {
                         @Override
@@ -232,6 +234,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 return true;
             case R.id.sort_name:
                 sortedByPrice=false;
+                sortedByLastUpdated=false;
                 if (!sortedByName) {
                     Collections.sort(filteredGasStations, new Comparator<GasStation>() {
                         @Override
@@ -248,6 +251,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         }
                     });
                     sortedByName=false;
+                }
+                listFragment.refresh("empty", filteredGasStations);
+                return true;
+            case R.id.sort_last_updated:
+                sortedByPrice=false;
+                sortedByName=false;
+                if (!sortedByName) {
+                    Collections.sort(filteredGasStations, new Comparator<GasStation>() {
+                        @Override
+                        public int compare(GasStation o1, GasStation o2) {
+                            return o1.getLastUpdated().compareTo(o2.getLastUpdated());
+                        }
+                    });
+                    sortedByLastUpdated=true;
+                } else {
+                    Collections.sort(filteredGasStations, new Comparator<GasStation>() {
+                        @Override
+                        public int compare(GasStation o1, GasStation o2) {
+                            return o2.getLastUpdated().compareTo(o1.getLastUpdated());
+                        }
+                    });
+                    sortedByLastUpdated=false;
                 }
                 listFragment.refresh("empty", filteredGasStations);
                 return true;
