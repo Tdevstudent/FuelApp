@@ -1,6 +1,7 @@
 package com.example.mvp;
 
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,19 +37,25 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        station = (GasStation) getIntent().getParcelableExtra("station");
+        Location zernike = new Location("");
+        zernike.setLatitude(53.240475);
+        zernike.setLongitude(6.536173);
+
         TextView name        = findViewById(R.id.name);
         TextView address     = findViewById(R.id.address);
         TextView euro95      = findViewById(R.id.euro95);
         TextView diesel      = findViewById(R.id.diesel);
         TextView lastUpdated = findViewById(R.id.lastUpdated);
-
-        station = getIntent().getParcelableExtra("station");
+        TextView distance    = findViewById(R.id.distance);
 
         name.setText(station.getName());
         address.setText(station.getAddress());
         euro95.setText(station.getEuro95());
         diesel.setText(station.getDiesel());
         lastUpdated.setText(station.getLastUpdated());
+        String distanceText = String.format("%.1f", station.getDistance(zernike)) + " km";
+        distance.setText(distanceText);
     }
 
     /**

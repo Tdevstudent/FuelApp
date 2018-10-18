@@ -1,5 +1,6 @@
 package com.example.mvp;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -101,5 +102,12 @@ public class GasStation implements Parcelable {
         dest.writeString(this.lastUpdated);
         dest.writeDouble(this.latitude);
         dest.writeDouble(this.longitude);
+    }
+
+    public float getDistance(Location loc) {
+        Location here = new Location("");
+        here.setLatitude(latitude);
+        here.setLongitude(longitude);
+        return loc.distanceTo(here) / 1000;
     }
 }

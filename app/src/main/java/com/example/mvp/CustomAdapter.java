@@ -39,7 +39,6 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
 
     @Override
     public void onClick(View v) {
-
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         GasStation station=(GasStation)object;
