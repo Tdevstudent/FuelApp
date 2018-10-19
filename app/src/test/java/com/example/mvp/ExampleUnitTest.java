@@ -1,4 +1,4 @@
-package com.example.mvp;
+package com.fuelapp.fuelapp;
 
 import org.junit.Test;
 

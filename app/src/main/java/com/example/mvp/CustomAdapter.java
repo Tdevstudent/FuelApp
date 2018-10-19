@@ -10,13 +10,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.example.mvp.GasStation;
 
 import java.util.ArrayList;
 
 public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnClickListener {
     private ArrayList<GasStation> gasStations;
     Context mContext;
-    private String fuelType="Euro95";
+    private String fuelType="Euro95 (E5)";
 
     private static class ViewHolder {
         TextView txtAddress;
@@ -27,33 +28,20 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
     }
 
     public CustomAdapter(ArrayList<GasStation> gasStations, Context context) {
-        super(context, R.layout.activity_station_list, gasStations);
+        super(context, R.layout.list_tab, gasStations);
         this.gasStations=gasStations;
         this.mContext=context;
     }
 
-    public void switchFuelType() {
-        if (this.fuelType=="Euro95") {
-            this.fuelType="Diesel";
-        } else {
-            this.fuelType="Euro95";
-        }
+    public void setFuelType(String fuelType) {
+        this.fuelType=fuelType;
     }
 
     @Override
     public void onClick(View v) {
-
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         GasStation station=(GasStation)object;
-
-        /*switch (v.getId())
-        {
-            case R.id.item_info:
-                Snackbar.make(v, "Last updated on: " +station.getLastUpdated(), Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
-                break;
-        }*/
     }
 
     // private int lastPosition = -1;
@@ -71,10 +59,10 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.activity_station_list, parent, false);
+            convertView = inflater.inflate(R.layout.list_tab, parent, false);
             //viewHolder.txtAddress = (TextView) convertView.findViewById(R.id.address);
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.name);
-            viewHolder.txtFuelType = (TextView) convertView.findViewById(R.id.fuelType);
+            //viewHolder.txtFuelType = (TextView) convertView.findViewById(R.id.fuelType);
             viewHolder.txtFuelPrice = (TextView) convertView.findViewById(R.id.fuelPrice);
             //viewHolder.info = (ImageView) convertView.findViewById(R.id.item_info);
 
@@ -92,10 +80,10 @@ public class CustomAdapter extends ArrayAdapter<GasStation> implements View.OnCl
 
         //viewHolder.txtAddress.setText(station.getAddress());
         viewHolder.txtName.setText(station.getName());
-        viewHolder.txtFuelType.setText(this.fuelType);
-        if (this.fuelType=="Euro95") {
+        //viewHolder.txtFuelType.setText(this.fuelType);
+        if (this.fuelType.equals("Euro95 (E5)")) {
             viewHolder.txtFuelPrice.setText(station.getEuro95());
-        } else if (this.fuelType=="Diesel") {
+        } else if (this.fuelType.equals("Diesel (B7)")) {
             viewHolder.txtFuelPrice.setText(station.getDiesel());
         }
         //viewHolder.info.setOnClickListener(this);

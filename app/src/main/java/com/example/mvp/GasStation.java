@@ -1,10 +1,22 @@
 package com.example.mvp;
 
+import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.android.gms.maps.model.LatLng;
 
-import java.io.Serializable;
+public class GasStation implements Parcelable {
 
-public class GasStation implements Serializable {
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public GasStation createFromParcel(Parcel in) {
+            return new GasStation(in);
+        }
+
+        public GasStation[] newArray(int size) {
+            return new GasStation[size];
+        }
+    };
 
     private String name;
     private String address;
@@ -13,9 +25,10 @@ public class GasStation implements Serializable {
     private String lastUpdated;
     private double latitude;
     private double longitude;
-    private transient LatLng location;
+    private LatLng location;
+    private String chain;
 
-    public GasStation(String name, String address, double euro95, double diesel, String lastUpdated, double latitude, double longitude) {
+    public GasStation(String name, String address, double euro95, double diesel, String lastUpdated, double latitude, double longitude, String chain) {
         this.name        = name;
         this.address     = address;
         this.euro95      = euro95;
@@ -24,6 +37,7 @@ public class GasStation implements Serializable {
         this.latitude    = latitude;
         this.longitude   = longitude;
         this.location    = new LatLng(latitude, longitude);
+        this.chain       = chain;
     }
 
     public String getLastUpdated() {
@@ -46,15 +60,54 @@ public class GasStation implements Serializable {
         return this.name;
     }
 
-    public LatLng getLocation() {
-        return location;
-    }
-
     public double getLatitude() {
         return latitude;
     }
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public LatLng getLocation() {
+        return location;
+    }
+
+    public String getChain() {
+        return chain;
+    }
+
+    // Parcelling part
+    public GasStation(Parcel in) {
+        this.name        = in.readString();
+        this.address     = in.readString();
+        this.euro95      = in.readDouble();
+        this.diesel      = in.readDouble();
+        this.lastUpdated = in.readString();
+        this.latitude    = in.readDouble();
+        this.longitude   = in.readDouble();
+        this.chain       = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.address);
+        dest.writeDouble(this.euro95);
+        dest.writeDouble(this.diesel);
+        dest.writeString(this.lastUpdated);
+        dest.writeDouble(this.latitude);
+        dest.writeDouble(this.longitude);
+    }
+
+    public float getDistance(Location loc) {
+        Location here = new Location("");
+        here.setLatitude(latitude);
+        here.setLongitude(longitude);
+        return loc.distanceTo(here) / 1000;
     }
 }
