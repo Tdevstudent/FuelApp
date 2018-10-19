@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private boolean sortedByPrice=false;
     private boolean sortedByName=false;
     private boolean sortedByLastUpdated=false;
+    private String fuelType="Euro95 (E5)";
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -214,20 +215,40 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 sortedByName=false;
                 sortedByLastUpdated=false;
                 if (!sortedByPrice) {
-                    Collections.sort(filteredGasStations, new Comparator<GasStation>() {
-                        @Override
-                        public int compare(GasStation o1, GasStation o2) {
-                            return o1.getEuro95().compareTo(o2.getEuro95());
-                        }
-                    });
+                    if (this.fuelType.equals("Euro95 (E5)")) {
+                        Collections.sort(filteredGasStations, new Comparator<GasStation>() {
+                            @Override
+                            public int compare(GasStation o1, GasStation o2) {
+                                return o1.getEuro95().compareTo(o2.getEuro95());
+                            }
+                        });
+                    } else if (this.fuelType.equals("Diesel (B7)")) {
+                        Collections.sort(filteredGasStations, new Comparator<GasStation>() {
+                            @Override
+                            public int compare(GasStation o1, GasStation o2) {
+                                return o1.getDiesel().compareTo(o2.getDiesel());
+                            }
+                        });
+                    }
+
                     sortedByPrice=true;
                 } else {
-                    Collections.sort(filteredGasStations, new Comparator<GasStation>() {
-                        @Override
-                        public int compare(GasStation o1, GasStation o2) {
-                            return o2.getEuro95().compareTo(o1.getEuro95());
-                        }
-                    });
+                    if (this.fuelType.equals("Euro95 (E5)")) {
+                        Collections.sort(filteredGasStations, new Comparator<GasStation>() {
+                            @Override
+                            public int compare(GasStation o1, GasStation o2) {
+                                return o2.getEuro95().compareTo(o1.getEuro95());
+                            }
+                        });
+                    } else if (this.fuelType.equals("Diesel (B7)")) {
+                        Collections.sort(filteredGasStations, new Comparator<GasStation>() {
+                            @Override
+                            public int compare(GasStation o1, GasStation o2) {
+                                return o2.getDiesel().compareTo(o1.getDiesel());
+                            }
+                        });
+                    }
+
                     sortedByPrice=false;
                 }
                 listFragment.refresh("empty", filteredGasStations);
@@ -332,6 +353,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // parent.getItemAtPosition(pos)
         //adapter.setFuelType((String)parent.getItemAtPosition(pos));
         //adapter.notifyDataSetChanged();
+        this.fuelType=(String)parent.getItemAtPosition(pos);
         listFragment.refresh((String)parent.getItemAtPosition(pos), filteredGasStations);
 
     }
